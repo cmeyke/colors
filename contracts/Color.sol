@@ -32,7 +32,7 @@ contract Color is
   }
 
   function mint(string memory _color) public {
-    require(hasRole(MINTER_ROLE, msg.sender));
+    require(hasRole(MINTER_ROLE, msg.sender), 'Sender must have minter role.');
     require(!_colorExists[_color], 'Color already exists.');
     _safeMint(msg.sender, _tokenIdCounter.current());
     _setTokenURI(_tokenIdCounter.current(), _color);
