@@ -33,7 +33,16 @@ export const ApplicationBar = ({
       try {
         await colorContract.mint(color)
       } catch (err) {
-        console.log((err as any).data.message)
+        const errMessage: string = (err as any).data.message
+        const start = errMessage.indexOf("'")
+        const end = errMessage.lastIndexOf("'")
+        if (start < end) {
+          const errString = errMessage.slice(start + 1, end)
+          alert(errString)
+          console.log(errString)
+        } else {
+          console.log(errMessage)
+        }
       }
   }
 
