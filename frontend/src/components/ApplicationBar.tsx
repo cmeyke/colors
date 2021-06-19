@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { ethers } from 'ethers'
+import { displayAddress } from './DisplayTokens'
 
 type ApplicationBarType = {
   address: string
@@ -15,13 +16,6 @@ export const ApplicationBar = ({
   const [color, setColor] = useState('')
 
   if (!address) return <div></div>
-
-  const displayAddress = ethers.utils.isAddress(address)
-    ? `${address.slice(0, 6)}...${address.slice(
-        address.length - 4,
-        address.length
-      )}`
-    : ''
 
   const formaterETH = new Intl.NumberFormat(undefined, {
     minimumFractionDigits: 4,
@@ -79,7 +73,7 @@ export const ApplicationBar = ({
           navigator.clipboard.writeText(address)
         }}
       >
-        {displayAddress} - {formaterETH(balance)}
+        {displayAddress(address)} - {formaterETH(balance)}
       </button>
     </div>
   )
