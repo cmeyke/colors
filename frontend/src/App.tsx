@@ -18,7 +18,7 @@ function App() {
     undefined as unknown as ethers.Contract
   )
   const [balance, setBalance] = useState(0)
-  const [colors, setColors] = useState([] as [string, string][])
+  const [colors, setColors] = useState([] as [string, string, number][])
 
   return (
     <div>

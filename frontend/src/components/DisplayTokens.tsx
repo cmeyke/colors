@@ -1,7 +1,7 @@
 import { ethers } from 'ethers'
 
 type DisplayTokensType = {
-  colors: [string, string][]
+  colors: [string, string, number][]
 }
 
 export const displayAddress = (address: string): string => {
@@ -22,7 +22,9 @@ export const DisplayTokens = ({ colors }: DisplayTokensType) => {
             className="w-36 h-36 rounded-full"
             style={{ backgroundColor: color[0] }}
           />
-          <div className="text-center pt-2">{color[0]}</div>
+          <div className="text-center pt-2">
+            {color[0]} - {color[2]}
+          </div>
           <div className="text-center">{displayAddress(color[1])}</div>
         </div>
       ))}

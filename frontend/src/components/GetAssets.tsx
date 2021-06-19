@@ -10,7 +10,7 @@ type GetAssetsType = {
   colorContract: ethers.Contract
   setColorContract: React.Dispatch<React.SetStateAction<ethers.Contract>>
   setBalance: React.Dispatch<React.SetStateAction<number>>
-  setColors: React.Dispatch<React.SetStateAction<[string, string][]>>
+  setColors: React.Dispatch<React.SetStateAction<[string, string, number][]>>
 }
 
 export const GetAssets = ({
@@ -33,11 +33,11 @@ export const GetAssets = ({
       )
       setColorContract(colorContract)
       const totalSupply = await colorContract.totalSupply()
-      let colors: [string, string][] = []
+      let colors: [string, string, number][] = []
       for (let i = 0; i < totalSupply; i++) {
         const color: string = await colorContract.tokenURI(i)
         const owner: string = await colorContract.ownerOf(i)
-        colors.push([color, owner])
+        colors.push([color, owner, i])
       }
       setColors(colors)
     } catch (err) {
