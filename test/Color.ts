@@ -1,6 +1,5 @@
 import { ethers } from 'hardhat'
 import { assert } from 'chai'
-import { Contract } from '@ethersproject/contracts'
 import chaiAsPromised from 'chai-as-promised'
 import chai from 'chai'
 import { ContractReceipt, ContractTransaction } from 'ethers'
