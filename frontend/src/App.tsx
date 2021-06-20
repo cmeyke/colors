@@ -5,6 +5,7 @@ import { OpenWallet } from './components/OpenWallet'
 import { ApplicationBar } from './components/ApplicationBar'
 import { GetAssets } from './components/GetAssets'
 import { DisplayTokens } from './components/DisplayTokens'
+import { BottomBar } from './components/BottomBar'
 
 function App() {
   const [provider, setProvider] = useState(
@@ -42,6 +43,7 @@ function App() {
         colorContract={colorContract}
       />
       <DisplayTokens colors={colors} />
+      <BottomBar from={address} colorContract={colorContract} />
     </div>
   )
 }

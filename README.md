@@ -16,6 +16,6 @@ Add light/dark mode switch.
 
 ~~Add token rights management: only the issuer of the contract should be allowed to mint new tokens. Other rules could be defined.~~
 
-Add send NFT functionality.
+~~Add send NFT functionality.~~
 
 Replace the color attribute of the NFTs with a more complex data structure and possible external data.

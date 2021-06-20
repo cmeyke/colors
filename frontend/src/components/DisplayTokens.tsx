@@ -15,7 +15,7 @@ export const displayAddress = (address: string): string => {
 
 export const DisplayTokens = ({ colors }: DisplayTokensType) => {
   return (
-    <div className="flex flex-wrap pt-6 pr-6 pb-6">
+    <div className="flex flex-wrap pt-6 pr-6">
       {colors.map(color => (
         <div key={color[0]} className="pl-6 pb-6">
           <div

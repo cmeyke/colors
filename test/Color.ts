@@ -5,12 +5,14 @@ import chaiAsPromised from 'chai-as-promised'
 import chai from 'chai'
 import { ContractReceipt, ContractTransaction } from 'ethers'
 chai.use(chaiAsPromised).should()
+import { Color } from '../typechain/Color'
 
-let color: Contract
+let color: Color
 
 before(async () => {
-  const Color = await ethers.getContractFactory('Color')
-  color = await Color.deploy()
+  const _Color = await ethers.getContractFactory('Color')
+  const _color = await _Color.deploy()
+  color = _color as Color
   await color.deployed()
 })
 
@@ -43,7 +45,7 @@ describe('minting', async () => {
     const totalSupply = await color.totalSupply()
 
     // SUCCESS
-    assert.equal(totalSupply, 1)
+    assert.equal(Number(totalSupply), 1)
     assert.equal(event?.tokenId, 0, 'id is correct')
     assert.equal(
       event?.from,
@@ -68,7 +70,7 @@ describe('minting', async () => {
 
       const totalSupply = await color.totalSupply()
       let result = []
-      for (var i = 0; i < totalSupply; i++) {
+      for (var i = 0; i < Number(totalSupply); i++) {
         const colorURI = await color.tokenURI(i)
         result.push(colorURI)
       }

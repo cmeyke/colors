@@ -33,7 +33,6 @@ export const ApplicationBar = ({
         if (start < end) {
           const errString = errMessage.slice(start + 1, end)
           alert(errString)
-          console.log(errString)
         } else {
           console.log(errMessage)
         }
