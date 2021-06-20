@@ -2,13 +2,14 @@ import { useEffect } from 'react'
 import { ethers } from 'ethers'
 import color from '../contracts/Color.json'
 import contractAddress from '../contracts/contract-address.json'
+import { Color } from '../../../typechain'
 
 type GetAssetsType = {
   provider: ethers.providers.Web3Provider
   signer: ethers.providers.JsonRpcSigner
   address: string
-  colorContract: ethers.Contract
-  setColorContract: React.Dispatch<React.SetStateAction<ethers.Contract>>
+  colorContract: Color
+  setColorContract: React.Dispatch<React.SetStateAction<Color>>
   setBalance: React.Dispatch<React.SetStateAction<number>>
   setColors: React.Dispatch<React.SetStateAction<[string, string, number][]>>
 }
@@ -31,7 +32,7 @@ export const GetAssets = ({
         color.abi,
         signer
       )
-      setColorContract(colorContract)
+      setColorContract(colorContract as Color)
       const totalSupply = await colorContract.totalSupply()
       let colors: [string, string, number][] = []
       for (let i = 0; i < totalSupply; i++) {

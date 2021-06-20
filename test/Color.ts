@@ -5,14 +5,13 @@ import chaiAsPromised from 'chai-as-promised'
 import chai from 'chai'
 import { ContractReceipt, ContractTransaction } from 'ethers'
 chai.use(chaiAsPromised).should()
-import { Color } from '../typechain/Color'
+import { Color__factory, Color } from '../typechain'
 
 let color: Color
 
 before(async () => {
-  const _Color = await ethers.getContractFactory('Color')
-  const _color = await _Color.deploy()
-  color = _color as Color
+  const Color = (await ethers.getContractFactory('Color')) as Color__factory
+  color = await Color.deploy()
   await color.deployed()
 })
 

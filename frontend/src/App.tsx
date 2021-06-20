@@ -6,6 +6,7 @@ import { ApplicationBar } from './components/ApplicationBar'
 import { GetAssets } from './components/GetAssets'
 import { DisplayTokens } from './components/DisplayTokens'
 import { BottomBar } from './components/BottomBar'
+import { Color } from '../../typechain'
 
 function App() {
   const [provider, setProvider] = useState(
@@ -16,7 +17,7 @@ function App() {
   )
   const [address, setAddress] = useState('')
   const [colorContract, setColorContract] = useState(
-    undefined as unknown as ethers.Contract
+    undefined as unknown as Color
   )
   const [balance, setBalance] = useState(0)
   const [colors, setColors] = useState([] as [string, string, number][])

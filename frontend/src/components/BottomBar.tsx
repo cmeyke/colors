@@ -1,20 +1,22 @@
-import { ethers } from 'ethers'
 import { useState } from 'react'
-import { Color } from '../../../typechain/Color'
+import { Color } from '../../../typechain'
 
 type BottomBarType = {
   from: string
-  colorContract: ethers.Contract
+  colorContract: Color
 }
 
 export const BottomBar = ({ from, colorContract }: BottomBarType) => {
   const [id, setId] = useState(0)
   const [to, setTo] = useState('')
-  const color = colorContract as Color
 
   async function transfer() {
     try {
-      await color['safeTransferFrom(address,address,uint256)'](from, to, id)
+      await colorContract['safeTransferFrom(address,address,uint256)'](
+        from,
+        to,
+        id
+      )
     } catch (err) {
       console.log(err)
     }
