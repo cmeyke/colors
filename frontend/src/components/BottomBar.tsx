@@ -6,26 +6,32 @@ import { handleError } from './ApplicationBar'
 type BottomBarType = {
   from: string
   colorContract: Color
+  selectedId: number
+  setSelectedId: React.Dispatch<React.SetStateAction<number>>
 }
 
-export const BottomBar = ({ from, colorContract }: BottomBarType) => {
-  const [id, setId] = useState(-1)
+export const BottomBar = ({
+  from,
+  colorContract,
+  selectedId,
+  setSelectedId,
+}: BottomBarType) => {
   const [to, setTo] = useState('')
 
   async function transfer() {
     if (
-      id >= 0 &&
+      selectedId >= 0 &&
       from.toLowerCase() !== to.toLowerCase() &&
       ethers.utils.isAddress(from) &&
       ethers.utils.isAddress(to)
     )
       try {
         const totalSupply = await colorContract.totalSupply()
-        if (id < Number(totalSupply))
+        if (selectedId < Number(totalSupply))
           await colorContract['safeTransferFrom(address,address,uint256)'](
             from,
             to,
-            id
+            selectedId
           )
       } catch (err) {
         handleError(err)
@@ -35,9 +41,13 @@ export const BottomBar = ({ from, colorContract }: BottomBarType) => {
   return (
     <div className="flex bg-blue-700 p-2">
       <input
+        value={selectedId >= 0 ? selectedId : ''}
         className="bg-gray-700 rounded text-white ml-6 p-2 w-24"
         type="text"
-        onChange={event => setId(Number(event.target.value))}
+        onChange={event => {
+          const id = event.target.value ? Number(event.target.value) : -1
+          setSelectedId(id >= 0 ? id : -1)
+        }}
       />
       <input
         className="bg-gray-700 rounded text-white ml-1 p-2"

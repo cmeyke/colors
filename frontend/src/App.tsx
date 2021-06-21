@@ -21,6 +21,7 @@ function App() {
   )
   const [balance, setBalance] = useState(0)
   const [colors, setColors] = useState([] as [string, string, number][])
+  const [selectedId, setSelectedId] = useState(-1)
 
   return (
     <div>
@@ -43,8 +44,13 @@ function App() {
         balance={balance}
         colorContract={colorContract}
       />
-      <DisplayTokens colors={colors} />
-      <BottomBar from={address} colorContract={colorContract} />
+      <DisplayTokens colors={colors} setSelectedId={setSelectedId} />
+      <BottomBar
+        from={address}
+        colorContract={colorContract}
+        selectedId={selectedId}
+        setSelectedId={setSelectedId}
+      />
     </div>
   )
 }

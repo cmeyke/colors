@@ -2,6 +2,7 @@ import { ethers } from 'ethers'
 
 type DisplayTokensType = {
   colors: [string, string, number][]
+  setSelectedId: React.Dispatch<React.SetStateAction<number>>
 }
 
 export const displayAddress = (address: string): string => {
@@ -13,14 +14,17 @@ export const displayAddress = (address: string): string => {
     : ''
 }
 
-export const DisplayTokens = ({ colors }: DisplayTokensType) => {
+export const DisplayTokens = ({ colors, setSelectedId }: DisplayTokensType) => {
   return (
     <div className="flex flex-wrap pt-6 pr-6">
       {colors.map(color => (
         <div key={color[0]} className="pl-6 pb-6">
-          <div
+          <button
             className="w-36 h-36 rounded-full"
             style={{ backgroundColor: color[0] }}
+            onClick={() => {
+              setSelectedId(color[2])
+            }}
           />
           <div className="text-center pt-2">
             {color[0]} - {color[2]}
