@@ -1,5 +1,7 @@
 import { useState } from 'react'
 import { Color } from '../../../typechain'
+import { ethers } from 'ethers'
+import { handleError } from './ApplicationBar'
 
 type BottomBarType = {
   from: string
@@ -7,19 +9,27 @@ type BottomBarType = {
 }
 
 export const BottomBar = ({ from, colorContract }: BottomBarType) => {
-  const [id, setId] = useState(0)
+  const [id, setId] = useState(-1)
   const [to, setTo] = useState('')
 
   async function transfer() {
-    try {
-      await colorContract['safeTransferFrom(address,address,uint256)'](
-        from,
-        to,
-        id
-      )
-    } catch (err) {
-      console.log(err)
-    }
+    if (
+      id >= 0 &&
+      from.toLowerCase() !== to.toLowerCase() &&
+      ethers.utils.isAddress(from) &&
+      ethers.utils.isAddress(to)
+    )
+      try {
+        const totalSupply = await colorContract.totalSupply()
+        if (id < Number(totalSupply))
+          await colorContract['safeTransferFrom(address,address,uint256)'](
+            from,
+            to,
+            id
+          )
+      } catch (err) {
+        handleError(err)
+      }
   }
 
   return (

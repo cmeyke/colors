@@ -8,6 +8,18 @@ type ApplicationBarType = {
   colorContract: ethers.Contract
 }
 
+export const handleError = (err: unknown) => {
+  const errMessage: string = (err as any).data.message
+  const start = errMessage.indexOf("'")
+  const end = errMessage.lastIndexOf("'")
+  if (start < end) {
+    const errString = errMessage.slice(start + 1, end)
+    alert(errString)
+  } else {
+    console.log(errMessage)
+  }
+}
+
 export const ApplicationBar = ({
   address,
   balance,
@@ -27,15 +39,7 @@ export const ApplicationBar = ({
       try {
         await colorContract.mint(color)
       } catch (err) {
-        const errMessage: string = (err as any).data.message
-        const start = errMessage.indexOf("'")
-        const end = errMessage.lastIndexOf("'")
-        if (start < end) {
-          const errString = errMessage.slice(start + 1, end)
-          alert(errString)
-        } else {
-          console.log(errMessage)
-        }
+        handleError(err)
       }
   }
 
