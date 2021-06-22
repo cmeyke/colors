@@ -9,15 +9,17 @@ type ApplicationBarType = {
 }
 
 export const handleError = (err: unknown) => {
-  const errMessage: string = (err as any).data.message
-  const start = errMessage.indexOf("'")
-  const end = errMessage.lastIndexOf("'")
-  if (start < end) {
-    const errString = errMessage.slice(start + 1, end)
-    alert(errString)
-  } else {
-    console.log(errMessage)
-  }
+  const errMessage: string = (err as any)?.data?.message
+  if (errMessage) {
+    const start = errMessage.indexOf("'")
+    const end = errMessage.lastIndexOf("'")
+    if (start < end) {
+      const errString = errMessage.slice(start + 1, end)
+      alert(errString)
+    } else {
+      console.error(errMessage)
+    }
+  } else console.error(err)
 }
 
 export const ApplicationBar = ({

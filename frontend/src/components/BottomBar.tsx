@@ -18,6 +18,18 @@ export const BottomBar = ({
 }: BottomBarType) => {
   const [to, setTo] = useState('')
 
+  async function idInRange(id: number): Promise<boolean> {
+    if (id < 0) return false
+    try {
+      const totalSupply = await colorContract.totalSupply()
+      const last = await colorContract.tokenByIndex(Number(totalSupply) - 1)
+      return id <= Number(last)
+    } catch (err) {
+      handleError(err)
+      return false
+    }
+  }
+
   async function transfer() {
     if (
       selectedId >= 0 &&
@@ -26,8 +38,8 @@ export const BottomBar = ({
       ethers.utils.isAddress(to)
     )
       try {
-        const totalSupply = await colorContract.totalSupply()
-        if (selectedId < Number(totalSupply))
+        const inRange = await idInRange(selectedId)
+        if (inRange)
           await colorContract['safeTransferFrom(address,address,uint256)'](
             from,
             to,
@@ -39,14 +51,12 @@ export const BottomBar = ({
   }
 
   async function burn() {
-    if (selectedId >= 0)
-      try {
-        const totalSupply = await colorContract.totalSupply()
-        if (selectedId < Number(totalSupply))
-          await colorContract.burn(selectedId)
-      } catch (err) {
-        handleError(err)
-      }
+    try {
+      const inRange = await idInRange(selectedId)
+      if (inRange) await colorContract.burn(selectedId)
+    } catch (err) {
+      handleError(err)
+    }
   }
 
   return (
