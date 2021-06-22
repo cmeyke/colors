@@ -38,6 +38,17 @@ export const BottomBar = ({
       }
   }
 
+  async function burn() {
+    if (selectedId >= 0)
+      try {
+        const totalSupply = await colorContract.totalSupply()
+        if (selectedId < Number(totalSupply))
+          await colorContract.burn(selectedId)
+      } catch (err) {
+        handleError(err)
+      }
+  }
+
   return (
     <div className="flex bg-blue-700 p-2">
       <input
@@ -60,6 +71,12 @@ export const BottomBar = ({
         onClick={transfer}
       >
         Transfer
+      </button>
+      <button
+        className="bg-gray-700 hover:bg-gray-900 text-white font-bold py-2 px-4 rounded ml-1"
+        onClick={burn}
+      >
+        Burn
       </button>
     </div>
   )

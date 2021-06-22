@@ -3,6 +3,7 @@ import { ethers } from 'ethers'
 import color from '../contracts/Color.json'
 import contractAddress from '../contracts/contract-address.json'
 import { Color } from '../../../typechain'
+import { handleError } from './ApplicationBar'
 
 type GetAssetsType = {
   provider: ethers.providers.Web3Provider
@@ -36,13 +37,14 @@ export const GetAssets = ({
       const totalSupply = await colorContract.totalSupply()
       let colors: [string, string, number][] = []
       for (let i = 0; i < totalSupply; i++) {
-        const color: string = await colorContract.tokenURI(i)
-        const owner: string = await colorContract.ownerOf(i)
-        colors.push([color, owner, i])
+        const index = await colorContract.tokenByIndex(i)
+        const color: string = await colorContract.tokenURI(index)
+        const owner: string = await colorContract.ownerOf(index)
+        colors.push([color, owner, Number(index)])
       }
       setColors(colors)
     } catch (err) {
-      console.error(err)
+      handleError(err)
     }
   }
 
