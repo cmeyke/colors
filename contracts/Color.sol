@@ -31,8 +31,22 @@ contract Color is
     _setupRole(MINTER_ROLE, msg.sender);
   }
 
+  function _isValidColor(string memory _color) internal pure returns(bool) {
+    uint256 length = bytes(_color).length;
+    if (length == 7 && bytes(_color)[0] == '#') {
+      for (uint256 i = 1; i < length; i++) {
+        bytes1 c = bytes(_color)[i];
+        if (!((c >= 'A' && c <= 'Z') || (c >= 'a' && c <= 'z') || (c >= '0' && c <= '9')))
+          return false;
+      }
+      return true;
+    }
+    return false;
+  }
+
   function mint(string memory _color) public {
     require(hasRole(MINTER_ROLE, msg.sender), 'Sender must have minter role.');
+    require(_isValidColor(_color), 'Color must be of format "#xxxxxx"');
     require(!_colorExists[_color], 'Color already exists.');
     _safeMint(msg.sender, _tokenIdCounter.current());
     _setTokenURI(_tokenIdCounter.current(), _color);
