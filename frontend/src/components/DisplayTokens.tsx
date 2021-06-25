@@ -18,7 +18,7 @@ export const DisplayTokens = ({ colors, setSelectedId }: DisplayTokensType) => {
   return (
     <div className="flex flex-wrap pt-6 pr-6">
       {colors.map(color => (
-        <div key={color[0]} className="pl-6 pb-6">
+        <div key={color[2]} className="pl-6 pb-6" style={{ order: color[2] }}>
           <button
             className="w-36 h-36 rounded-full"
             style={{ backgroundColor: color[0] }}
