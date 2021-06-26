@@ -37,7 +37,7 @@ describe('deployment', function () {
 describe('minting', async () => {
   it('creates a new token', async () => {
     const [owner, addr1] = await ethers.getSigners()
-    const result: ContractTransaction = await color.mint('#EC058E')
+    const result: ContractTransaction = await color.mint('#ec058e')
     const receipt: ContractReceipt = await result.wait()
     const event = receipt.events ? receipt.events[0].args : null
     const totalSupply = await color.totalSupply()
@@ -53,17 +53,17 @@ describe('minting', async () => {
     assert.equal(event?.to, owner.address, 'to is correct')
 
     // FAILURE: cannot mint same color twice
-    await color.mint('#EC058E').should.be.rejected
+    await color.mint('#ec058e').should.be.rejected
 
     // FAILURE: only the owner can mint new tokens
-    await color.mint('#EC05FF', { from: addr1.address }).should.be.rejected
+    await color.mint('#ec05ff', { from: addr1.address }).should.be.rejected
   })
 
   describe('indexing', async () => {
     it('lists colors', async () => {
       // Mint 3 more tokens
-      await color.mint('#5386E4')
-      await color.mint('#FFFFFF')
+      await color.mint('#5386e4')
+      await color.mint('#ffffff')
       await color.mint('#000000')
 
       const totalSupply = await color.totalSupply()
@@ -73,7 +73,7 @@ describe('minting', async () => {
         result.push(colorURI)
       }
 
-      const expected = ['#EC058E', '#5386E4', '#FFFFFF', '#000000']
+      const expected = ['#ec058e', '#5386e4', '#ffffff', '#000000']
       assert.equal(result.join(','), expected.join(','))
     })
   })

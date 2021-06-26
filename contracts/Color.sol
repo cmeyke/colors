@@ -36,7 +36,7 @@ contract Color is
     if (length == 7 && bytes(_color)[0] == '#') {
       for (uint256 i = 1; i < length; i++) {
         bytes1 c = bytes(_color)[i];
-        if (!((c >= 'A' && c <= 'Z') || (c >= 'a' && c <= 'z') || (c >= '0' && c <= '9')))
+        if (!((c >= 'a' && c <= 'z') || (c >= '0' && c <= '9')))
           return false;
       }
       return true;
@@ -46,7 +46,7 @@ contract Color is
 
   function mint(string memory _color) public {
     require(hasRole(MINTER_ROLE, msg.sender), 'Sender must have minter role.');
-    require(_isValidColor(_color), 'Color must be of format "#xxxxxx"');
+    require(_isValidColor(_color), 'Color must be of format "#xxxxxx | x in {a-z, 0-9}"');
     require(!_colorExists[_color], 'Color already exists.');
     _safeMint(msg.sender, _tokenIdCounter.current());
     _setTokenURI(_tokenIdCounter.current(), _color);
